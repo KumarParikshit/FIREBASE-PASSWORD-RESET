@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <script src="./auth.js"></script>
+    </head>
+  <body>
+    <input type="email" placeholder="Email..." id="email_field" />
+      <button onclick="sendPasswordReset()"> Reset Password</button>
+      <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
+    };
+    firebase.initializeApp(config);
+  </script>
+  </body>
+</html>
